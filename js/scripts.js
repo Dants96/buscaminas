@@ -15,6 +15,21 @@ function inicio() {
     generarCampoMinasVacio();
     esparcirMinas();
     esparcirNumeros();
+    ponerCarita();
+}
+
+function ponerCarita(){
+    let boton = document.querySelector("#jugar");
+    boton.removeEventListener("mouseover", function(){});
+    boton.removeEventListener("mouseout", function(){});
+
+    boton.innerHTML = ":)";
+    boton.addEventListener("mouseover", function(){
+        document.querySelector("#jugar").innerHTML = ":o";
+    });
+    boton.addEventListener("mouseout", function(){
+        document.querySelector("#jugar").innerHTML = ":)";
+    });
 }
 
 function pintarTablero() {
@@ -138,7 +153,7 @@ function generarCampoMinasVacio() {
 
 function esparcirMinas() {
     let numMinasEsparcidas = 0;
-    while (numMinasEsparcidas < buscaminas.numMinasTotales) {
+    while (numMinasEsparcidas <= buscaminas.numMinasTotales) {
 
         let fila = Math.floor(Math.random() * buscaminas.numFilas);
         let columna = Math.floor(Math.random() * buscaminas.numColumnas);
@@ -177,7 +192,10 @@ function esparcirNumeros() {
     }
 }
 
-window.onload = inicio();
+window.onload = function(){
+    inicio();
+    document.querySelector("#jugar").addEventListener("click", inicio);
+}
 
 function resolverTablero(are_u_wining_son) {
     for (let i = 0; i < buscaminas.numFilas; i++) {
@@ -190,13 +208,31 @@ function resolverTablero(are_u_wining_son) {
                 casilla.classList.add("sinmaracar");
             } else if (buscaminas.aCamposMinas[i][j] == "B" && casilla.classList.contains("fa-flag")) {
                 casilla.classList.add("correct");
-                casilla.removeEventListener("contextmenu", marcar);
-                casilla.removeEventListener("click", destapar);
+               
             } else {
                 casilla.removeEventListener("contextmenu", marcar);
                 casilla.removeEventListener("click", destapar);
             }
         }
     }
-    (are_u_wining_son) ? alert("Ganaste"): alert("Perdiste");
+    let boton = document.querySelector("#jugar");
+    boton.removeEventListener("mouseover", function(){});
+    boton.removeEventListener("mouseout", function(){});
+    if(are_u_wining_son){
+        boton.innerHTML = "B)";
+        boton.addEventListener("mouseover", function(){
+            document.querySelector("#jugar").innerHTML = "Bo";
+        });
+        boton.addEventListener("mouseout", function(){
+            document.querySelector("#jugar").innerHTML = "B)";
+        });
+    }else{
+        boton.innerHTML = "xc";
+        boton.addEventListener("mouseout", function(){
+            document.querySelector("#jugar").innerHTML = "xc";
+        });
+        boton.addEventListener("mouseover", function(){
+            document.querySelector("#jugar").innerHTML = "xo";
+        });
+    }
 }

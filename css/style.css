@@ -45,6 +45,35 @@
     border-bottom: 1px solid #D3D3D3;
 }
 
+#jugar{
+    height: var(--size);
+    width: 20%;
+    background-color: #BBBBBB;
+    border-top: 2px solid #A9A9A9;
+    border-left: 2px solid #A9A9A9;
+    border-right: 2px solid #D3D3D3;
+    border-bottom: 2px solid #D3D3D3;
+    text-align: center;
+    font-size: x-large;
+}
+
+#jugar:hover{
+    box-shadow: inset 0px 0px 4px 0px white;
+}
+
 #tablero div:not(.destapado):hover{
     box-shadow: inset 0px 0px 4px 0px white;
+}
+
+.header-num{
+    background-color: #BBBBBB;
+    border-top: 2px solid #A9A9A9;
+    border-left: 2px solid #A9A9A9;
+    border-right: 2px solid #D3D3D3;
+    border-bottom: 2px solid #D3D3D3;
+    line-height: var(--size);
+    width: 40%;
+    text-align: center;
+    margin-left: 20px;
+    margin-right: 20px;
 }
