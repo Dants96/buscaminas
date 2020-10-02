@@ -4,18 +4,22 @@ const buscaminas = {
     numMinasEncontradas: 0,
     numFilas: 15,
     numColumnas: 15,
-    aCamposMinas: []
+    aCamposMinas: [],
+    cronometro : new crearCronometro("tiempo"),
+    banderas : 0
 }
 
 function inicio() {
     buscaminas.numFilas = 10;
     buscaminas.numColumnas = 10;
     buscaminas.numMinasTotales = 12;
+    buscaminas.banderas = 0;
     pintarTablero();
     generarCampoMinasVacio();
     esparcirMinas();
     esparcirNumeros();
     ponerCarita();
+    buscaminas.cronometro.iniciar();
 }
 
 function ponerCarita(){
@@ -66,7 +70,7 @@ function borrarTablero() {
 
 function marcar(miEvento) {
     if (miEvento.type === "contextmenu") {
-        console.log(miEvento);
+        //console.log(miEvento);
         let casilla = miEvento.currentTarget;
         miEvento.stopPropagation();
         miEvento.preventDefault();
@@ -78,20 +82,27 @@ function marcar(miEvento) {
             if (casilla.classList.contains("fa-flag")) {
                 casilla.classList.remove("fa-flag");
                 casilla.classList.add("fa-question");
-                buscaminas.numMinasEncontradas--;
+                if(buscaminas.aCamposMinas[fila][columna] == "B"){buscaminas.numMinasEncontradas--;}
+                buscaminas.banderas --;
             } else if (casilla.classList.contains("fa-question")) {
                 casilla.classList.remove("fa-question");
                 casilla.classList.remove("fas");
             } else if (casilla.classList.length == 0) {
                 casilla.classList.add("fas");
                 casilla.classList.add("fa-flag");
-                buscaminas.numMinasEncontradas++;
+                buscaminas.banderas ++;
+                mostrarMarcador();
+                if(buscaminas.aCamposMinas[fila][columna] == "B"){buscaminas.numMinasEncontradas++;}
                 if (buscaminas.numMinasEncontradas == buscaminas.numMinasTotales) {
                     resolverTablero(true);
                 }
             }
         }
     }
+}
+
+function mostrarMarcador(){
+    document.querySelector("#minas_res").innerHTML = buscaminas.numMinasTotales - buscaminas.banderas;
 }
 
 
@@ -108,8 +119,6 @@ function destapar(miEvento) {
 function destaparCasilla(fila, columna) {
     fila = parseInt(fila);
     columna = parseInt(columna);
-    console.log("destapando casilla [" + fila + "][" + columna + "]");
-
 
     if (fila > -1 && fila < buscaminas.numFilas && columna > -1 && columna < buscaminas.numColumnas) {
         let casilla = document.querySelector("#f" + fila + "_c" + columna);
@@ -164,7 +173,6 @@ function esparcirMinas() {
 
         numMinasEsparcidas++;
     }
-    console.log(buscaminas.aCamposMinas);
 }
 
 function contarMinasAlrededorCasilla(fila, columna) {
@@ -192,12 +200,9 @@ function esparcirNumeros() {
     }
 }
 
-window.onload = function(){
-    inicio();
-    document.querySelector("#jugar").addEventListener("click", inicio);
-}
 
 function resolverTablero(are_u_wining_son) {
+    buscaminas.cronometro.detener();
     for (let i = 0; i < buscaminas.numFilas; i++) {
         for (let j = 0; j < buscaminas.numColumnas; j++) {
             let casilla = document.querySelector("#f" + i + "_c" + j);
@@ -235,4 +240,13 @@ function resolverTablero(are_u_wining_son) {
             document.querySelector("#jugar").innerHTML = "xo";
         });
     }
+}
+
+
+window.onload = function(){
+    inicio();
+    document.querySelector("#jugar").addEventListener("click", function(){
+        buscaminas.cronometro.reiniciar();
+        inicio();
+    });
 }

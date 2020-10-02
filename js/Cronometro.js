@@ -3,18 +3,19 @@ function crearCronometro(display_id){
     objeto.horas = 0;
     objeto.minutos = 0;
     objeto.segundos = 0;
+    objeto.ic = 0;
+    document.querySelector("#"+display_id).innerHTML = "00 : 00"
 
     objeto.iniciar = function () {
         pintar();
-        ic = setInterval(pintar, 1000);
+        objeto.ic = setInterval(pintar, 1000);
     }
 
     objeto.detener = function(){
-        clearInterval(ic);
+        clearInterval(objeto.ic);
     }
 
     objeto.reiniciar = function(){
-        objeto.detener();
         objeto.horas = 0;
         objeto.minutos = 0;
         objeto.segundos = 0;
