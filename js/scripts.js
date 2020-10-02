@@ -5,8 +5,8 @@ const buscaminas = {
     numFilas: 15,
     numColumnas: 15,
     aCamposMinas: [],
-    cronometro : new crearCronometro("tiempo"),
-    banderas : 0
+    cronometro: new crearCronometro("tiempo"),
+    banderas: 0
 }
 
 function inicio() {
@@ -22,16 +22,16 @@ function inicio() {
     buscaminas.cronometro.iniciar();
 }
 
-function ponerCarita(){
+function ponerCarita() {
     let boton = document.querySelector("#jugar");
-    boton.removeEventListener("mouseover", function(){});
-    boton.removeEventListener("mouseout", function(){});
+    boton.removeEventListener("mouseover", function () {});
+    boton.removeEventListener("mouseout", function () {});
 
     boton.innerHTML = ":)";
-    boton.addEventListener("mouseover", function(){
+    boton.addEventListener("mouseover", function () {
         document.querySelector("#jugar").innerHTML = ":o";
     });
-    boton.addEventListener("mouseout", function(){
+    boton.addEventListener("mouseout", function () {
         document.querySelector("#jugar").innerHTML = ":)";
     });
 }
@@ -82,17 +82,21 @@ function marcar(miEvento) {
             if (casilla.classList.contains("fa-flag")) {
                 casilla.classList.remove("fa-flag");
                 casilla.classList.add("fa-question");
-                if(buscaminas.aCamposMinas[fila][columna] == "B"){buscaminas.numMinasEncontradas--;}
-                buscaminas.banderas --;
+                if (buscaminas.aCamposMinas[fila][columna] == "B") {
+                    buscaminas.numMinasEncontradas--;
+                }
+                buscaminas.banderas--;
             } else if (casilla.classList.contains("fa-question")) {
                 casilla.classList.remove("fa-question");
                 casilla.classList.remove("fas");
             } else if (casilla.classList.length == 0) {
                 casilla.classList.add("fas");
                 casilla.classList.add("fa-flag");
-                buscaminas.banderas ++;
+                buscaminas.banderas++;
                 mostrarMarcador();
-                if(buscaminas.aCamposMinas[fila][columna] == "B"){buscaminas.numMinasEncontradas++;}
+                if (buscaminas.aCamposMinas[fila][columna] == "B") {
+                    buscaminas.numMinasEncontradas++;
+                }
                 if (buscaminas.numMinasEncontradas == buscaminas.numMinasTotales) {
                     resolverTablero(true);
                 }
@@ -101,7 +105,7 @@ function marcar(miEvento) {
     }
 }
 
-function mostrarMarcador(){
+function mostrarMarcador() {
     document.querySelector("#minas_res").innerHTML = buscaminas.numMinasTotales - buscaminas.banderas;
 }
 
@@ -213,7 +217,7 @@ function resolverTablero(are_u_wining_son) {
                 casilla.classList.add("sinmaracar");
             } else if (buscaminas.aCamposMinas[i][j] == "B" && casilla.classList.contains("fa-flag")) {
                 casilla.classList.add("correct");
-               
+
             } else {
                 casilla.removeEventListener("contextmenu", marcar);
                 casilla.removeEventListener("click", destapar);
@@ -221,31 +225,31 @@ function resolverTablero(are_u_wining_son) {
         }
     }
     let boton = document.querySelector("#jugar");
-    boton.removeEventListener("mouseover", function(){});
-    boton.removeEventListener("mouseout", function(){});
-    if(are_u_wining_son){
+    boton.removeEventListener("mouseover", function () {});
+    boton.removeEventListener("mouseout", function () {});
+    if (are_u_wining_son) {
         boton.innerHTML = "B)";
-        boton.addEventListener("mouseover", function(){
+        boton.addEventListener("mouseover", function () {
             document.querySelector("#jugar").innerHTML = "Bo";
         });
-        boton.addEventListener("mouseout", function(){
+        boton.addEventListener("mouseout", function () {
             document.querySelector("#jugar").innerHTML = "B)";
         });
-    }else{
+    } else {
         boton.innerHTML = "xc";
-        boton.addEventListener("mouseout", function(){
+        boton.addEventListener("mouseout", function () {
             document.querySelector("#jugar").innerHTML = "xc";
         });
-        boton.addEventListener("mouseover", function(){
+        boton.addEventListener("mouseover", function () {
             document.querySelector("#jugar").innerHTML = "xo";
         });
     }
 }
 
 
-window.onload = function(){
+window.onload = function () {
     inicio();
-    document.querySelector("#jugar").addEventListener("click", function(){
+    document.querySelector("#jugar").addEventListener("click", function () {
         buscaminas.cronometro.reiniciar();
         inicio();
     });
