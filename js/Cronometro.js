@@ -1,4 +1,4 @@
-function crearCronometro(){
+function crearCronometro(display_id){
     var objeto = {};
     objeto.horas = 0;
     objeto.minutos = 0;
@@ -18,6 +18,7 @@ function crearCronometro(){
         objeto.horas = 0;
         objeto.minutos = 0;
         objeto.segundos = 0;
+        pintar();
     }
 
     function pintar(){
@@ -27,16 +28,14 @@ function crearCronometro(){
         let s_out = (objeto.segundos < 10)? "0" + objeto.segundos: objeto.segundos;
         let m_out = (objeto.minutos < 10)? "0" + objeto.minutos: objeto.minutos;
         let h_out = (objeto.horas < 10)? "0" + objeto.horas: objeto.horas;
-
-        console.log(h_out + " : " + m_out + " : " + s_out);
-
+        
+        let pantalla = document.querySelector("#"+display_id);
+        if(objeto.horas == 0){
+            pantalla.innerHTML = m_out + " : " + s_out;
+        }else{pantalla.innerHTML = h_out + " : " + m_out + " : " + s_out;}
+        
         objeto.segundos += 1;
     }
 
     return objeto;
-}
-
-window.onload = function (){
-    cronometro = new crearCronometro();
-    cronometro.iniciar();
 }
