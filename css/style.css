@@ -55,6 +55,7 @@
     border-bottom: 2px solid #D3D3D3;
     text-align: center;
     font-size: x-large;
+    user-select: none;
 }
 
 #jugar:hover{
@@ -76,4 +77,5 @@
     text-align: center;
     margin-left: 20px;
     margin-right: 20px;
+    user-select: none;
 }
